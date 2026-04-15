@@ -1,3 +1,8 @@
 {
-  "itemGroup.apiarist": "Apiarist"
+  "itemGroup.apiarist": "Apiarist",
+  "tooltip.apiarist.cell_state.empty": "Empty",
+  "tooltip.apiarist.cell_state.egg": "egg",
+  "tooltip.apiarist.cell_state.empty": "Empty",
+  "tooltip.apiarist.cell_state.empty": "Empty",
+  "tooltip.apiarist.cell_state.empty": "Empty",
 }

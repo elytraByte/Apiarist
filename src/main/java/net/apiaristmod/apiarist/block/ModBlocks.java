@@ -13,8 +13,9 @@ public class ModBlocks {
 
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(Apiarist.MODID);
 
-    public static final DeferredBlock<Block> FRAME_BLOCK = BLOCKS.registerSimpleBlock(
+    public static final DeferredBlock<FrameBlock> FRAME_BLOCK = BLOCKS.registerBlock(
             "frame_block",
+            FrameBlock::new,
             () -> BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)
     );
 

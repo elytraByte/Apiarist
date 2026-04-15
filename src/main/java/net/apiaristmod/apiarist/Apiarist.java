@@ -2,8 +2,11 @@ package net.apiaristmod.apiarist;
 
 import com.mojang.logging.LogUtils;
 import net.apiaristmod.apiarist.block.ModBlocks;
+import net.apiaristmod.apiarist.block.blockentity.ModBlockEntities;
 import net.apiaristmod.apiarist.datagen.DataGenerators;
 import net.apiaristmod.apiarist.item.ModItems;
+import net.apiaristmod.apiarist.menu.ModMenuTypes;
+import net.apiaristmod.apiarist.screen.FrameBlockScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Blocks;
@@ -16,6 +19,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import org.slf4j.Logger;
@@ -41,6 +45,9 @@ public class Apiarist {
         ModItems.register(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered
         ModCreativeModeTabs.register(modEventBus);
+
+        ModMenuTypes.MENU_TYPES.register(modEventBus);
+        ModBlockEntities.BLOCK_ENTITY_TYPES.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (Apiarist) to respond directly to events.
@@ -74,11 +81,18 @@ public class Apiarist {
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
     public static class ClientModEvents {
+
+        @SubscribeEvent
+        public static void registerScreens(RegisterMenuScreensEvent event) {
+            event.register(ModMenuTypes.FRAME_BLOCK_MENU.get(), FrameBlockScreen::new);
+        }
+
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             // Some client setup code
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+
         }
     }
 }
